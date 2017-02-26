@@ -1,0 +1,19 @@
+body {
+  background: lightblue; }
+
+input[type="checkbox"], input[type="radio"] {
+  display: none; }
+
+label:before {
+  content: '';
+  display: inline-block;
+  background-repeat: no-repeat;
+  cursor: pointer; }
+
+.checkbox input:checked + label:before {
+  background-position: -59px -32px; }
+
+.radiobox input:checked + label:before {
+  background-position: -59px -10px; }
+
+/*# sourceMappingURL=style.css.map */

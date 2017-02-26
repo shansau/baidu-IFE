@@ -1,0 +1,53 @@
+/**
+    checkbox
+ */
+input[type="checkbox"],input[type="radio"]{
+    display: none;
+}
+.checkbox label:before,.radiobox label:before{
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("img.png");
+    background-repeat: no-repeat;
+
+    cursor: pointer;
+}
+.checkbox label:before{
+    background-position: -24px -32px;
+}
+
+.checkbox input:checked + label:before{
+    background-position: -59px -32px;
+}
+/**
+    radiobox
+ */
+
+.radiobox label:before{
+    background-position: -24px -10px;
+}
+
+.radiobox input:checked + label:before{
+    background-position: -59px -10px;
+}
+/*input[type="radio"] {*/
+    /*display: none;*/
+/*}*/
+/*label {*/
+    /*width: 16px;*/
+    /*height: 16px;*/
+    /*display: inline-block;*/
+    /*background-image: url("img.png");*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: -24px -10px;*/
+
+    /*cursor: pointer;*/
+/*}*/
+
+/*input:checked + label{*/
+     /*background-position: -59px -10px;*/
+/*}*/
+
+

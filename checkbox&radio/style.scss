@@ -1,0 +1,49 @@
+$checkbox:(
+  'width': 16px,
+  'height': 16px,
+  'background-image':url('img.png'),
+  'background-position': -24px -32px
+);
+$radiobox:(
+  'width': 16px,
+  'height': 16px,
+  'background-image':url('img.png'),
+  'backgroudn-position':-24px -10px,
+);
+body{
+  background: lightblue;
+}
+@mixin changeView($list){
+  @each $property,$value in $list{
+    $property : $value
+  }
+}
+
+input[type="checkbox"],input[type="radio"]{
+  display: none;
+}
+label:before{
+  content: '';
+  display: inline-block;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.checkbox{
+  label:before{
+    @include changeView($checkbox);
+  }
+  input:checked + label:before{
+    background-position: -59px -32px;
+  }
+}
+
+.radiobox{
+  label:before{
+    @include changeView($radiobox);
+  }
+  input:checked + label:before{
+    background-position: -59px -10px;
+  }
+}
+
