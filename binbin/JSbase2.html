@@ -31,14 +31,15 @@
         var newData = new Array();
         var aqiList = document.getElementById('aqi-list');
         var newList = '';
+        var rankList = ['一','二','三','四','五'];
         for(var i = 0;i < arr.length;i ++){
             if(arr[i][1] > 60){
                 newData.push(arr[i]);
             }
         };
-        console.log(newData.length);
+
         for(var n = 0;n < newData.length;n ++){
-            newList +=  '<li>' + newData[n][0] + ',' + newData[n][1] + '</li>' ;
+            newList +=  '<li>' + '第' + rankList[n] + '名：' + newData[n][0] + ',' + newData[n][1] + '</li>' ;
         }
         aqiList.innerHTML = newList;
 //        console.log(newData);
