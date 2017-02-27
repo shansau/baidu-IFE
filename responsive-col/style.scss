@@ -1,4 +1,5 @@
 @charset "UTF-8";
+//思考row这个类存在的意义，boot里面他只有margin-left和margin-right是负值，以及清除浮动的作用
 *{
   margin: 0;
   padding: 0;
@@ -6,20 +7,31 @@
 }
 .main{
   background: #8699A4;
-  padding-bottom: 20px;
-  padding-right: 20px;
-  overflow: hidden;
+  padding: 20px;
+  padding-top: 0;
+  //清除浮动
+  //overflow: hidden;
 }
 //清除浮動方法一
 //.clear{
 //  clear: both;
 //}
+.row{
+  margin-left: -20px;
+}
+.row:after{
+  content: '';
+  display: block;
+  clear: both;
+}
 div[class*='col-']{
   border: 2px solid #999;
   height: 50px;
   background: #eee;
+
   margin-top: 20px;
   margin-left: 20px;
+
   float: left;
 }
 @media screen and (min-width:768px){
@@ -36,7 +48,7 @@ div[class*='col-']{
     width: calc(33.33% - 20px);
   }
   .col-md-5{
-    width: calc(41.67% - 20px);
+    width: calc(41.66% - 20px);
   }
   .col-md-6{
     width: calc(50% - 20px);
@@ -83,7 +95,7 @@ div[class*='col-']{
     width: calc(58.33% - 20px);
   }
   .col-sm-8{
-    width: calc(66.60% - 20px);
+    width: calc(66.66% - 20px);
   }
   .col-sm-9{
     width: calc(75% - 20px);
