@@ -77,7 +77,7 @@ function render(data) {
     var resort = document.getElementById('resort');
     data.forEach(function(value,index){
         newList += '<li>第' + (index + 1).toLocaleString('zh-Hans-CN-u-nu-hanidec',{useGrouping:false}) + '名：' + value[0] + '空气质量：' + '<b>' + value[1] + '</b></li>';
-    })
+    });
     resort.innerHTML = newList;
 }
 
@@ -88,7 +88,6 @@ function btnHandle() {
 }
 
 function init() {
-
     // 在这下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
     var sort = document.getElementById('sort-btn');
     sort.addEventListener('click',function(){
