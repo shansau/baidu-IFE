@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd43021a-8403-4a52-b2d7-e5dcb9f74f61" name="Default" comment="">
+<<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/xiaowei/Three column layout.html" afterPath="$PROJECT_DIR$/xiaowei/Three column layout.html" />
+=======
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/right-click menu/menu.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/xiaowei/Three column layout.html" />
+>>>>>>> parent of e2fe3dc... 双飞翼三栏布局
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,8 +30,13 @@
       <file leaf-file-name="Three column layout.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/xiaowei/Three column layout.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="646">
               <caret line="64" column="19" lean-forward="true" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
+=======
+            <state relative-caret-position="258">
+              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+>>>>>>> parent of e2fe3dc... 双飞翼三栏布局
               <folding />
             </state>
           </provider>
@@ -193,12 +204,20 @@
       <option name="presentableId" value="Default" />
       <updated>1488106452342</updated>
       <workItem from="1488106453907" duration="1836000" />
+<<<<<<< HEAD
       <workItem from="1488116732618" duration="2357000" />
+=======
+      <workItem from="1488116732618" duration="533000" />
+>>>>>>> parent of e2fe3dc... 双飞翼三栏布局
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="4193000" />
+=======
+    <option name="totallyTimeSpent" value="2369000" />
+>>>>>>> parent of e2fe3dc... 双飞翼三栏布局
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -259,8 +278,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/xiaowei/Three column layout.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="646">
           <caret line="64" column="19" lean-forward="true" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
+=======
+        <state relative-caret-position="258">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+>>>>>>> parent of e2fe3dc... 双飞翼三栏布局
           <folding />
         </state>
       </provider>
