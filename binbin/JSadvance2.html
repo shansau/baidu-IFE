@@ -52,7 +52,7 @@
             //input框的值
             var newNum = '';
             //用于渲染的list
-            var list = [1,2,3];
+            var list = [1];
             //插入li的父元素
             var box = document.getElementById('memberbox');
 
@@ -61,12 +61,20 @@
             var lEnter = document.getElementById('leftEnter');
             lEnter.addEventListener('click',function(){
                 newNum = document.getElementById('inputNum');
-                //流程控制，输入框的值不能为空
-                if(newNum.value != '' | null){
-                    leftEnter(list,newNum,box);
+                //队列长度不超过60
+                if(list.length <=60){
+                    //流程控制，输入框的值不能为空，而且要在10-100之间的而数字
+                    var reg = /^\d{2}$|^\d{3}$/gi;
+                    if(newNum.value != '' && reg.test(newNum.value)){
+//                    console.log(reg.test(newNum.value));
+                        leftEnter(list,newNum,box);
+                    }else{
+                        alert('输入框不能为空，请输入10-100之间的数字');
+                    }
                 }else{
-                    alert('不能为空');
+                    alert('队列长度不能超过60！');
                 }
+
             });
 
             var rEnter = document.getElementById('rightEnter');
@@ -103,16 +111,16 @@
         //从队列的头部入unshift()
         function leftEnter(arr,input,parentNode){
             arr.unshift(input.value);
-//            重新渲染
+    //            重新渲染
             List(arr,parentNode);
-//            console.log(arr);
+    //            console.log(arr);
             input.value = '';
         };
         //从队列的尾部入push()
         function rightEnter(arr,input,parentNode){
             arr.push(input.value);
             List(arr,parentNode);
-//            console.log(arr);
+    //            console.log(arr);
             input.value = '';
         };
         //传入list对象，以及list的渲染的父元素
@@ -136,7 +144,7 @@
 
             parentNode.innerHTML = boxCon;
 
-//            给每一个class绑定方法，一定要在插入元素节点之后
+    //            给每一个class绑定方法，一定要在插入元素节点之后
             //给每一个li绑定点击删除方法
             var members = document.getElementsByClassName('member');
             //这里需要用到闭包
@@ -159,5 +167,6 @@
         init();
 
     </script>
+
 </body>
 </html>
