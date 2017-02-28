@@ -9,8 +9,7 @@
             padding: 0;
         }
         .member{
-            height: 30px;
-            line-height: 30px;
+            line-height: 1;
             color: #fff;
             border: 1px solid #999;
             background-color: red;
@@ -24,6 +23,9 @@
         #memberbox{
             display: flex;
             flex-direction: row;
+            flex-wrap:wrap;
+            align-items:flex-end;
+
             margin-top: 20px;
         }
     </style>
@@ -52,7 +54,7 @@
             //input框的值
             var newNum = '';
             //用于渲染的list
-            var list = [1];
+            var list = [10];
             //插入li的父元素
             var box = document.getElementById('memberbox');
 
@@ -64,9 +66,8 @@
                 //队列长度不超过60
                 if(list.length <=60){
                     //流程控制，输入框的值不能为空，而且要在10-100之间的而数字
-                    var reg = /^\d{2}$|^\d{3}$/gi;
+                    var reg = /^\d{2}$|100/gi;
                     if(newNum.value != '' && reg.test(newNum.value)){
-//                    console.log(reg.test(newNum.value));
                         leftEnter(list,newNum,box);
                     }else{
                         alert('输入框不能为空，请输入10-100之间的数字');
@@ -149,6 +150,7 @@
             var members = document.getElementsByClassName('member');
             //这里需要用到闭包
             for(var n = 0; n　< members.length;n ++){
+                members[n].style.height = arr[n] * 5 + 'px';
                 (function(e){
                     members[e].addEventListener('click',function(){
                         removeSelf(arr,e,parentNode);
