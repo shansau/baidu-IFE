@@ -7,12 +7,12 @@
         *{
             margin: 0;
             padding: 0;
+            font-size: 10px;
         }
         .member{
-            line-height: 1;
             color: #fff;
             border: 1px solid #999;
-            background-color: red;
+            background-color: lightblue;
             padding-left:3px ;
             padding-right:3px ;
             text-align: center;
@@ -40,7 +40,7 @@
         </ul>
         <br>
         <div>
-            <input type="text" id="inputNum">
+            <input type="number" id="inputNum" min='10' max='100' />
             <button id="leftEnter">左侧入</button>
             <button id="rightEnter">右侧入</button>
             <button id="leftOut">左侧出</button>
@@ -55,12 +55,12 @@
             //input框的值
             var newNum = '';
             //用于渲染的list
-            var list = [10, 33, 44, 22, 51, 11,80,12,23,43,54,23,54,76,87,98,21,40,33,55,22,43,43,54,65,54,65,23,54,23,34,54,56,67,78,12];
-//            var list = [13,10,12,32,11,30,22];
+//            var list = [10, 33, 44, 22, 51, 11,80,12,23,43,54,23,54,76,87,98,21,40,33,55,22,43,43,54,65,54,65,23,54,23,34,54,56,67,78,12];
+            var list = [13,10,12,90,32,11,30,22,100,80];
             //插入li的父元素
             var box = document.getElementById('memberbox');
 
-            var reg = /^\d{2}$|100/gi;
+//            var reg = /^\d{2}$|100/gi;
 
             //如果初始list内有数据，则进行一次渲染
             if(list.length > 0){
@@ -74,24 +74,25 @@
                 //队列长度不超过60
                 if(list.length <=60){
                     //流程控制，输入框的值不能为空，而且要在10-100之间的而数字
-                    if(newNum.value != '' && reg.test(newNum.value)){
+                    if(newNum.value != '' && newNum.value < 100 && newNum.value > 10){
                         leftEnter(list,newNum,box);
                     }else{
                         alert('输入框不能为空，请输入10-100之间的数字');
+                        return false;
                     }
                 }else{
                     alert('队列长度不能超过60！');
+                    return false;
                 }
-
             });
 
             var rEnter = document.getElementById('rightEnter');
             rEnter.addEventListener('click',function(){
                 newNum = document.getElementById('inputNum');
-                if(newNum.value != '' && reg.test(newNum.value)){
+                if(newNum.value != '' && newNum.value < 100 && newNum.value > 10){
                     rightEnter(list,newNum,box);
                 }else{
-                    alert('不能为空');
+                    alert('输入框不能为空，请输入10-100之间的数字');
                 }
             });
 
@@ -131,7 +132,7 @@
         };
         //从队列的尾部入push()
         function rightEnter(arr,input,parentNode){
-            arr.push(parseInt(input.value));
+            arr.push(input.value);
             List(arr,parentNode);
     //            console.log(arr);
             input.value = '';
@@ -163,7 +164,7 @@
 
             //这里需要用到闭包
             for(var n = 0; n　< members.length;n ++){
-                members[n].style.height = arr[n] * 5 + 'px';
+                members[n].style.height = arr[n] + 'px';
                 (function(e){
                     members[e].addEventListener('click',function(){
                         removeSelf(arr,e,parentNode);
@@ -181,9 +182,9 @@
         function sort(arr,parentNode){
             //i用来记录第几次完整的排序，j是记录每一次完整的排序包含多少次小排序
             //而i每增加1，小排序就会减少1，因为每次完整的排序就会把最大的数置于最后
-            var save ,m = 1;
+            var save;
             for(var i = 1;i < arr.length;i ++){
-                for(var j = 0;j < arr.length - i;j ++,m ++){
+                for(var j = 0,m = 1;j < arr.length - i;j ++,m ++){
                     if(arr[j] > arr[j + 1]){
                         save = arr[j + 1];
                         arr[j + 1] = arr[j];
@@ -191,9 +192,9 @@
 
                         (function(list,count) {
                             setTimeout(function() {
+//                                console.log(count);
                                 List(list,parentNode);
-                                console.log(count);
-                            }, 1000 * count);
+                            }, 500 * count);
                         })(arr,m);
                     }
                 }

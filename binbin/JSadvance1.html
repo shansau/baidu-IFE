@@ -62,7 +62,7 @@
             lEnter.addEventListener('click',function(){
                 newNum = document.getElementById('inputNum');
                 //流程控制，输入框的值不能为空
-                if(newNum.value != '' | null){
+                if(newNum.value != '' || null){
                     leftEnter(list,newNum,box);
                 }else{
                     alert('不能为空');
@@ -72,7 +72,7 @@
             var rEnter = document.getElementById('rightEnter');
             rEnter.addEventListener('click',function(){
                 newNum = document.getElementById('inputNum');
-                if(newNum.value != '' | null){
+                if(newNum.value != '' || null){
                     rightEnter(list,newNum,box);
                 }else{
                     alert('不能为空');
