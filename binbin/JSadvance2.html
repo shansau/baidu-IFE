@@ -56,6 +56,7 @@
             var newNum = '';
             //用于渲染的list
             var list = [10, 33, 44, 22, 51, 11,80,12,23,43,54,23,54,76,87,98,21,40,33,55,22,43,43,54,65,54,65,23,54,23,34,54,56,67,78,12];
+//            var list = [13,10,12,32,11,30,22];
             //插入li的父元素
             var box = document.getElementById('memberbox');
 
@@ -159,6 +160,7 @@
             //给每一个class绑定方法，一定要在插入元素节点之后
             //给每一个li绑定点击删除方法
             var members = document.getElementsByClassName('member');
+
             //这里需要用到闭包
             for(var n = 0; n　< members.length;n ++){
                 members[n].style.height = arr[n] * 5 + 'px';
@@ -168,27 +170,31 @@
                     });
                 })(n);
             }
-
-            console.log('1');
         };
-
+        //移除元素
         function removeSelf(arr,loca,parentNode){
             arr.splice(loca,1);
             console.log(arr);
             List(arr,parentNode);
         }
-
+        //排序
         function sort(arr,parentNode){
             //i用来记录第几次完整的排序，j是记录每一次完整的排序包含多少次小排序
             //而i每增加1，小排序就会减少1，因为每次完整的排序就会把最大的数置于最后
-            var sava ;
+            var save ,m = 1;
             for(var i = 1;i < arr.length;i ++){
-                for(var j = 0;j < arr.length - i;j ++){
+                for(var j = 0;j < arr.length - i;j ++,m ++){
                     if(arr[j] > arr[j + 1]){
-                        sava = arr[j + 1];
+                        save = arr[j + 1];
                         arr[j + 1] = arr[j];
-                        arr[j] = sava;
-                        List(arr,parentNode);
+                        arr[j] = save;
+
+                        (function(list,count) {
+                            setTimeout(function() {
+                                List(list,parentNode);
+                                console.log(count);
+                            }, 1000 * count);
+                        })(arr,m);
                     }
                 }
             }
