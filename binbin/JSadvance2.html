@@ -13,10 +13,10 @@
             color: #fff;
             border: 1px solid #999;
             background-color: red;
-            padding-left:10px ;
-            padding-right:10px ;
+            padding-left:3px ;
+            padding-right:3px ;
             text-align: center;
-            margin-right: 20px;
+            margin-right: 10px;
             list-style: none;
             cursor: pointer;
         }
@@ -45,6 +45,7 @@
             <button id="rightEnter">右侧入</button>
             <button id="leftOut">左侧出</button>
             <button id="rightOut">右侧出</button>
+            <button id="sortArr">排序</button>
         </div>
         <ul id ="memberbox">
         </ul>
@@ -54,19 +55,24 @@
             //input框的值
             var newNum = '';
             //用于渲染的list
-            var list = [10];
+            var list = [10, 33, 44, 22, 51, 11,80,12,23,43,54,23,54,76,87,98,21,40,33,55,22,43,43,54,65,54,65,23,54,23,34,54,56,67,78,12];
             //插入li的父元素
             var box = document.getElementById('memberbox');
 
-            List(list,box);
+            var reg = /^\d{2}$|100/gi;
 
+            //如果初始list内有数据，则进行一次渲染
+            if(list.length > 0){
+                List(list,box);
+            }
+
+            //给每个按钮绑定事件
             var lEnter = document.getElementById('leftEnter');
             lEnter.addEventListener('click',function(){
                 newNum = document.getElementById('inputNum');
                 //队列长度不超过60
                 if(list.length <=60){
                     //流程控制，输入框的值不能为空，而且要在10-100之间的而数字
-                    var reg = /^\d{2}$|100/gi;
                     if(newNum.value != '' && reg.test(newNum.value)){
                         leftEnter(list,newNum,box);
                     }else{
@@ -81,7 +87,7 @@
             var rEnter = document.getElementById('rightEnter');
             rEnter.addEventListener('click',function(){
                 newNum = document.getElementById('inputNum');
-                if(newNum.value != '' | null){
+                if(newNum.value != '' && reg.test(newNum.value)){
                     rightEnter(list,newNum,box);
                 }else{
                     alert('不能为空');
@@ -106,12 +112,17 @@
                     alert('队列已为空');
                 }
             });
+
+            var sortBtn = document.getElementById('sortArr');
+            sortBtn.addEventListener('click',function(){
+               sort(list,box);
+            });
         };
 
         //传入list对象，输入框对象，以及list的渲染的父元素
         //从队列的头部入unshift()
         function leftEnter(arr,input,parentNode){
-            arr.unshift(input.value);
+            arr.unshift(parseInt(input.value));
     //            重新渲染
             List(arr,parentNode);
     //            console.log(arr);
@@ -119,7 +130,7 @@
         };
         //从队列的尾部入push()
         function rightEnter(arr,input,parentNode){
-            arr.push(input.value);
+            arr.push(parseInt(input.value));
             List(arr,parentNode);
     //            console.log(arr);
             input.value = '';
@@ -145,7 +156,7 @@
 
             parentNode.innerHTML = boxCon;
 
-    //            给每一个class绑定方法，一定要在插入元素节点之后
+            //给每一个class绑定方法，一定要在插入元素节点之后
             //给每一个li绑定点击删除方法
             var members = document.getElementsByClassName('member');
             //这里需要用到闭包
@@ -157,6 +168,8 @@
                     });
                 })(n);
             }
+
+            console.log('1');
         };
 
         function removeSelf(arr,loca,parentNode){
@@ -165,9 +178,19 @@
             List(arr,parentNode);
         }
 
-        function sort(arr){
-            for(var i = 0;i <arr.length - 1;i ++){
-
+        function sort(arr,parentNode){
+            //i用来记录第几次完整的排序，j是记录每一次完整的排序包含多少次小排序
+            //而i每增加1，小排序就会减少1，因为每次完整的排序就会把最大的数置于最后
+            var sava ;
+            for(var i = 1;i < arr.length;i ++){
+                for(var j = 0;j < arr.length - i;j ++){
+                    if(arr[j] > arr[j + 1]){
+                        sava = arr[j + 1];
+                        arr[j + 1] = arr[j];
+                        arr[j] = sava;
+                        List(arr,parentNode);
+                    }
+                }
             }
         }
 
