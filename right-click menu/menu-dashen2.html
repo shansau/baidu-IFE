@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>自定义样式</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        ul,
+        ol {
+            padding: 0;
+            list-style: none;
+        }
+
+        .box {
+            width: 100%;
+            height: 100px;
+            background-color: #f40;
+        }
+
+        .menu {
+            position: absolute;
+            width: 82px;
+            height: 68px;
+        }
+
+        .menu ul {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+<div class="box">
+</div>
+<div class="menu"></div>
+<script>
+    const menuStr = `<ul><li>这里是菜单</li><li>这里是菜单</li><li>这里是菜单</li></ul>`;
+    const menu = document.querySelector('.menu');
+    const windowWidth = window.innerWidth,
+        menuWidth = menu.clientWidth;
+    document.querySelector('div').addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        menu.innerHTML = menuStr;
+        let menuX = event.x + 10;
+        let menuy = event.y + 10;
+        menuX + menuWidth > windowWidth ? (menu.style.left = menuX - menuWidth - 10 + 'px') : (menu.style.left = menuX + 'px')
+        menu.style.top = event.y + 10 + 'px';
+    });
+    document.documentElement.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+        menu.innerHTML = '';
+    })
+    document.querySelector('.menu').addEventListener('contextmenu', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    })
+</script>
+</body>
+
+</html>
