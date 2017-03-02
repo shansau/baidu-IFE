@@ -162,7 +162,7 @@
             //给每一个li绑定点击删除方法
             var members = document.getElementsByClassName('member');
 
-            //这里需要用到闭包
+            //这里需要用到闭包，绑定点击删除事件
             for(var n = 0; n　< members.length;n ++){
                 members[n].style.height = arr[n] + 'px';
                 (function(e){
@@ -180,8 +180,7 @@
         }
         //排序
         function sort(arr,parentNode){
-            //i用来记录第几次完整的排序，j是记录每一次完整的排序包含多少次小排序
-            //而i每增加1，小排序就会减少1，因为每次完整的排序就会把最大的数置于最后
+
             var save;
             for(var i = 1;i < arr.length;i ++){
                 for(var j = 0,m = 1;j < arr.length - i;j ++,m ++){

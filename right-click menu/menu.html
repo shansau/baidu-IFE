@@ -3,8 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
-<body>
+    <style>
+        #rightClick{
+            width: 400px;
+            height: 40px;
+            line-height: 2;
+            border: 2px solid #999;
 
+            font-size: 20px;
+            text-align: center;
+        }
+        #show{
+            width: 100px;
+            padding: 20px;
+            padding-top: 15px;
+            border: 2px solid lightgreen;
+            list-style: none;
+            text-align: center;
+
+            display: none;
+        }
+        #show li{
+            padding-top: 5px;
+            border-bottom: 1px solid lightgreen;
+        }
+    </style>
+</head>
+<!--<body oncontextmenu=self.event.returnValue=false>-->
+<body>
+    <p id="rightClick">你快点来点我啊，右键右键！</p>
+    <ul id="show">
+        <li>你是猫</li>
+        <li>你是狗</li>
+        <li>你是羊</li>
+    </ul>
+
+    <script>
+        var rc = document.getElementById('rightClick');
+        var show = document.getElementById('show');
+        var bools = 0;
+
+        rc.addEventListener('contextmenu',function(event) {
+            // 阻止事件冒泡到body，就可以“禁止”右键菜单的出现了。
+            // 还有一种就是在body上添加oncontextmenu=self.event.returnValue=false
+            event.preventDefault();
+            event.stopPropagation();
+            showMenu(show);
+        },false);
+
+        var showMenu = function(obj) {
+            console.log('1')
+            if(bools === 0) {
+                obj.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
