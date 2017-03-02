@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height:100%
+        }
+        #father{
+            position: relative;
+            top: 90%;
+            left: 30%;
+        }
         #rightClick{
             width: 400px;
             height: 40px;
@@ -15,48 +27,93 @@
         }
         #show{
             width: 100px;
-            padding: 20px;
-            padding-top: 15px;
+            padding: 0;
             border: 2px solid lightgreen;
             list-style: none;
             text-align: center;
 
+            position: absolute;
             display: none;
         }
         #show li{
-            padding-top: 5px;
-            border-bottom: 1px solid lightgreen;
+            height: 30px;
+            line-height: 2.5;
+        }
+        #show li:not(:first-child){
+            border-top: 1px solid lightgreen;
         }
     </style>
 </head>
 <!--<body oncontextmenu=self.event.returnValue=false>-->
 <body>
+<div id="father">
     <p id="rightClick">你快点来点我啊，右键右键！</p>
     <ul id="show">
         <li>你是猫</li>
         <li>你是狗</li>
         <li>你是羊</li>
     </ul>
+</div>
+
 
     <script>
         var rc = document.getElementById('rightClick');
         var show = document.getElementById('show');
-        var bools = 0;
+        var father = document.getElementById('father');
 
         rc.addEventListener('contextmenu',function(event) {
             // 阻止事件冒泡到body，就可以“禁止”右键菜单的出现了。
             // 还有一种就是在body上添加oncontextmenu=self.event.returnValue=false
             event.preventDefault();
             event.stopPropagation();
-            showMenu(show);
+            //父元素距离浏览器左边的距离
+            var offsetL = father.offsetLeft;
+            var offsetT = father.offsetTop;
+            console.log(offsetT,offsetL);
+            //鼠标当前位置
+            var mouseLocaX = event.clientX;
+            var mouseLocaY = event.clientY;
+            //浏览器宽度
+            var winWidth = document.body.clientWidth;
+            var winHeight = document.body.clientHeight;
+            showMenu(show, [mouseLocaX, mouseLocaY, offsetL, offsetT, winWidth, winHeight]);
+        },false);
+        rc.addEventListener('click',function(event) {
+            hidden(show);
         },false);
 
+       window.addEventListener('contextmenu',function(event){
+            hidden(show);
+       },false);
+       window.addEventListener('click',function(event){
+           hidden(show);
+       },false);
+
+       //控制显隐
         var showMenu = function(obj) {
-            console.log('1')
-            if(bools === 0) {
-                obj.style.display = 'block';
+            obj.style.display = 'block';
+
+            //默认
+            obj.style.left = arguments[1][0] - arguments[1][2]  + "px";
+            obj.style.top = arguments[1][1] - arguments[1][3] + "px";
+
+            if(arguments[1][4] - arguments[1][0] > 100) {
+                obj.style.left = arguments[1][0] - arguments[1][2]  + "px";
+            }else {
+                obj.style.left = arguments[1][0] - arguments[1][2] - 100 + "px";
             }
+            if(arguments[1][5] - arguments[1][1] > 90) {
+                obj.style.top = arguments[1][1] - arguments[1][3] + "px";
+            }else {
+                obj.style.top = arguments[1][1] - arguments[1][3] - 90 + "px";
+            }
+
         }
+        var hidden = function(obj) {
+            obj.style.display = 'none';
+        }
+
+        //控制位置
     </script>
 </body>
 </html>
