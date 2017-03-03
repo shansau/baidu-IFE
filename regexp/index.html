@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var re = new RegExp("^1[034578]\\d{9}$");
+    //最开始我的下面第一种写法，后来才反应过来，因为在引号中，所以\d需要转义
+//    var re = new RegExp("^1[034578]\d{9}$");
+//    var re = new RegExp("^[1][358][0-9]{9}$");
+    var str1 = '18812011232';
+    var str2 = '12345678909';
+    var str3 = '18845';
+    console.log(re.test(str1));
+    console.log(re.test(str2));
+    console.log(re.test(str3));
+
+    console.log('--------------------------------------');
+
+    var rep1 = 'foo bar foo';
+    var rep2 = 'foo foo bar';
+    var rep3 = 'foo  barbar bar';
+//    var repeat = new RegExp("\\b\\s?foo\\b\\sfoo");
+    var repeat = new RegExp("\\b\\s?(foo)\\b\\s\\1");
+    console.log(repeat.exec(rep1));
+    console.log(repeat.exec(rep2));
+    console.log(repeat.exec(rep3))
+</script>
+</body>
+</html>
