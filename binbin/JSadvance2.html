@@ -121,6 +121,7 @@
             sortBtn.addEventListener('click',function(){
 //                s_sort(list,0,box);
                 sort(list);
+                //清除计时器
                 clearTimeout(time);
                 time = setTimeout(slow,500);
                 function slow() {
@@ -128,14 +129,13 @@
                     console.log(wait)
                     if (wait != undefined) {
                         List(wait,box);
-                        clearTimeout(time);
                         time = setTimeout(slow, 500);
                     } else {
                         clearTimeout(time);
                     }
                 }
             });
-        };
+        }
 
         //传入list对象，输入框对象，以及list的渲染的父元素
         //从队列的头部入unshift()
