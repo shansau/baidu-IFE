@@ -1,0 +1,134 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 04</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            flex-wrap: nowrap;
+        }
+        ul li {
+            font-size: 12px;
+            padding: 2px;
+            margin: 0 2px;
+            background: red;
+            transition: all 1s;
+        }
+    </style>
+</head>
+
+<body>
+<input id="textNode" type="text" title="队列" value="55">
+<button id="leftIn">左侧入</button>
+<button id="rightIn">右侧入</button>
+<button id="leftOut">左侧出</button>
+<button id="rightOut">右侧出</button>
+<button id="bubbleSort">冒泡排序</button>
+<ul id="result">
+</ul>
+<script>
+    //    公共方法
+    function $(element) {
+        if (element.indexOf("#") >= 0) {
+            return document.getElementById(element.slice(1));
+        }
+    }
+    /*新建数据列表数组*/
+    var dataList = [];
+    /*新建排序快照列表数组*/
+    var stepList = [];
+    /*DOM操作节点*/
+    var leftIn = $("#leftIn");
+    var rightIn = $("#rightIn");
+    var leftOut = $("#leftOut");
+    var rightOut = $("#rightOut");
+    var text = $("#textNode");
+    var result = $("#result");
+    var bubbleSortBtn = $("#bubbleSort");
+    /*输入范围*/
+    var minNum = 10;
+    var maxNum = 100;
+    /*渲染li节点函数*/
+    function render(arr) {
+        result.innerHTML = "";
+        for (var i = 0; i < arr.length; i++) {
+            result.innerHTML += "<li>" + arr[i] + "</li>";
+            result.querySelectorAll("li")[i].style.height = arr[i] * 3 + "px";
+        }
+    }
+    //添加按钮事件
+    leftIn.onclick = function () {//在第一个子节点之前插入
+        if (/\d+/.test(text.value) && text.value >= minNum && text.value <= maxNum) {//判断是否为数字
+            if (dataList.length <= 60) {
+                dataList.unshift(text.value);
+                render(dataList);
+            } else {
+                alert("超过60个啦~")
+            }
+        }
+    };
+    rightIn.onclick = function () {//添加新节点在后面
+        if (/\d+/.test(text.value) && text.value >= minNum && text.value <= maxNum) {//判断是否为数字
+            if (dataList.length <= 60) {
+                dataList.push(text.value);
+                render(dataList);
+            } else {
+                alert("超过60个啦~")
+            }
+        }
+    };
+    leftOut.onclick = function () {
+        var msg = result.firstElementChild;
+        alert(msg ? msg.innerHTML : "左边没什么可以删除的呢~");
+        dataList.shift();
+        render(dataList);
+    };
+    rightOut.onclick = function () {
+        var msg = result.lastElementChild;
+        alert(msg ? msg.innerHTML : "右边没什么可以删除的呢~");
+        dataList.pop();
+        render(dataList);
+    };
+
+    bubbleSortBtn.onclick = function () {
+        bubbleSort(dataList);
+        var time ;
+        function slow() {
+            //shift() 方法用于把数组的第一个元素从其中删除，并返回第一个元素的值。
+            var wait = stepList.shift();
+            if (wait != undefined) {
+                render(wait);
+                setTimeout(slow, 500);
+            } else {
+                clearTimeout(time);
+            }
+        }
+        time = setTimeout(slow, 500);
+    };
+
+    /*冒泡排序*/
+    function bubbleSort(arr) {
+        for (var i = 0; i < arr.length - 1; i++) {
+            for (var j = 0; j < arr.length - 1; j++) {
+                if (arr[j + 1] < arr[j]) {
+                    var temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    /*slice很重要,直接使用arr会导致引用同一个数组对象*/
+                    stepList.push(arr.slice(0));
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

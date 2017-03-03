@@ -45,7 +45,7 @@
     </style>
 </head>
 <!--<body oncontextmenu=self.event.returnValue=false>-->
-<body>
+<body oncontextmenu="alert('1')">
 <div id="father">
     <p id="rightClick">你快点来点我啊，右键右键！</p>
     <ul id="show">
@@ -77,9 +77,10 @@
             var winHeight = document.body.clientHeight;
             showMenu(show, [mouseLocaX, mouseLocaY, offsetL, offsetT, winWidth, winHeight]);
         },false);
-        rc.addEventListener('click',function(event) {
-            hidden(show);
-        },false);
+        //由于window绑定了click hidden，就不用单独的绑定
+//        rc.addEventListener('click',function(event) {
+//            hidden(show);
+//        },false);
 
        window.addEventListener('contextmenu',function(event){
             hidden(show);

@@ -55,8 +55,8 @@
             //input框的值
             var newNum = '';
             //用于渲染的list
-//            var list = [10, 33, 44, 22, 51, 11,80,12,23,43,54,23,54,76,87,98,21,40,33,55,22,43,43,54,65,54,65,23,54,23,34,54,56,67,78,12];
-            var list = [13,10,12,90,32,11,30,22,100,80];
+            var list = [22,100,80,99,44,28,38,93,51,12,23,24,11,23,89,22];
+//            var list = [22,100,80,10];
             //插入li的父元素
             var box = document.getElementById('memberbox');
 
@@ -116,8 +116,24 @@
             });
 
             var sortBtn = document.getElementById('sortArr');
+            var time;
+
             sortBtn.addEventListener('click',function(){
-               sort(list,box);
+//                s_sort(list,0,box);
+                sort(list);
+                clearTimeout(time);
+                time = setTimeout(slow,500);
+                function slow() {
+                    var wait = newList.shift();
+                    console.log(wait)
+                    if (wait != undefined) {
+                        List(wait,box);
+                        clearTimeout(time);
+                        time = setTimeout(slow, 500);
+                    } else {
+                        clearTimeout(time);
+                    }
+                }
             });
         };
 
@@ -179,25 +195,52 @@
             List(arr,parentNode);
         }
         //排序
-        function sort(arr,parentNode){
-
+        var newList = [];
+        function sort(arr){
             var save;
-            for(var i = 1;i < arr.length;i ++){
-                for(var j = 0,m = 1;j < arr.length - i;j ++,m ++){
+            for(var i = 0;i < arr.length - 1;i ++){
+                for(var j = 0,m = 1;j < arr.length - 1;j ++,m ++){
                     if(arr[j] > arr[j + 1]){
                         save = arr[j + 1];
                         arr[j + 1] = arr[j];
                         arr[j] = save;
 
-                        (function(list,count) {
-                            setTimeout(function() {
-//                                console.log(count);
-                                List(list,parentNode);
-                            }, 500 * count);
-                        })(arr,m);
+                        newList.push(arr.slice(0));
+
+
+//                        (function(list,count) {
+//                            setTimeout(function() {
+////                                console.log(count);
+//                                List(list,parentNode);
+//                            }, 500 * count);
+//                        })(arr,m);
                     }
                 }
             }
+        }
+        //另外一种实现，递归
+        function s_sort(arr,N,parentNode) {
+            if (N >= arr.length - 1){
+                return ;
+            }
+            var index;          //最大的下标
+            var buffer = arr[N];            //第一个
+            for(var i = N;i < arr.length; i++){
+                if (buffer > arr[i]){
+                    buffer = arr[i];
+                    p = i;
+                }
+            }
+            buffer = arr[p];
+            arr[p] = arr[N];
+            arr[N] = buffer;
+
+            console.log(parentNode);
+            List(arr,parentNode);
+
+            setTimeout(function(){
+                s_sort(arr,N + 1,parentNode);
+            },200);
         }
 
         //给按钮绑定函数，初始化渲染list
