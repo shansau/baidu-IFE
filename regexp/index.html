@@ -22,11 +22,12 @@
     var rep1 = 'foo bar foo';
     var rep2 = 'foo foo bar';
     var rep3 = 'foo  barbar bar';
-//    var repeat = new RegExp("\\b\\s?foo\\b\\sfoo");
-    var repeat = new RegExp("\\b\\s?(foo)\\b\\s\\1");
+//    var repeat = new RegExp("\\s?\\bfoo\\b\\sfoo");
+//    var repeat = new RegExp("\\s?\\b(\w+)\\b\\s\\1");
+    var repeat = /\s?\b(\w+)\b\s\1/;
     console.log(repeat.exec(rep1));
     console.log(repeat.exec(rep2));
-    console.log(repeat.exec(rep3))
+    console.log(repeat.exec(rep3));
 </script>
 </body>
 </html>
