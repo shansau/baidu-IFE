@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+            font-size: 14px;
+        }
+        #form{
+            position: relative;
+            height: 40px;
+            line-height: 40px;
+            margin-left: 30px;
+        }
+        #form:after{
+            content: '必填,请输入4-16个字符 -.。';
+            position: absolute;
+            display: block;
+            top: 25px;
+            left:45px;
+            font-size: 12px;
+
+            color: #999;
+        }
+        #form.null:after{
+             content: '姓名不能为空';
+             color : red;
+         }
+        #form.regfalse:after{
+             content: '格式不正确';
+             color: red;
+         }
+        #form.regsuccess:after{
+            content: '格式正确';
+            color: green;
+        }
+        #name{
+            border:1px solid #eee;
+            border-radius: 2px;
+            padding: 2px 5px;
+            margin-left: 10px;
+        }
+        #sure{
+            padding: 3px 10px;
+            border: none;
+            color:#fff;
+            background: dodgerblue;
+        }
+    </style>
+</head>
+<body>
+<form action="" id="form">
+    <span>姓名</span>
+    <input type="text" id="name" />
+    <button type="button" id="sure">确 定</button>
+</form>
+<script>
+    //公共方法
+    function $(element){
+        if(element.indexOf('#') == 0){
+            return document.getElementById(element.slice(1));
+        }
+    }
+
+    var nameInput = $('#name'),
+        sureBtn = $('#sure'),
+        confirmForm = $('#form');
+
+    sureBtn.addEventListener('click', function() {
+        var value = nameInput.value;
+
+        if(value == '') {
+            confirmForm.setAttribute('class','null');
+            nameInput.style.border = '1px solid red';
+        }else{
+            var reg1 = /[0-9A-z\.-]{1}/gi,
+                reg2 = /[\u4e00-\u9fa5。]{1}/gi,
+                reg1Len = reg1.test(value) ? value.match(/[0-9A-z\.-]{1}/gi).length : 0,
+                reg2Len = reg2.test(value) ? value.match(/[\u4e00-\u9fa5。]{1}/gi).length : 0,
+                numLen = reg1Len +　reg2Len * 2;
+            
+            if(numLen > 4 && numLen < 16) {
+                confirmForm.setAttribute('class','regsuccess');
+                nameInput.style.border = '1px solid green';
+            }else {
+                confirmForm.setAttribute('class','regfalse');
+                nameInput.style.border = '1px solid red';
+            }
+        }
+    });
+
+
+</script>
+</body>
+</html>
