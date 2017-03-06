@@ -182,7 +182,7 @@
 
     //正则表达式匹配字符串
     function reg(str){
-        var reg = /((?=[(/s,，、)])*[A-z0-9\u4e00-\u9fa5]+(?=[\1])*)/gi;
+        var reg = /((?=[(\s,，、)])*[A-z0-9\u4e00-\u9fa5]+(?=[\1])*)/gi;
         var result = str.match(reg);
         return result;
     }
