@@ -16,7 +16,7 @@
             margin-left: 30px;
         }
         #form:after{
-            content: '必填,请输入4-16个字符 -.。';
+            content: '必填,请输入4-16个字符';
             position: absolute;
             display: block;
             top: 25px;
@@ -76,13 +76,15 @@
             confirmForm.setAttribute('class','null');
             nameInput.style.border = '1px solid red';
         }else{
-            var reg1 = /[0-9A-z\.-]{1}/gi,
-                reg2 = /[\u4e00-\u9fa5。]{1}/gi,
-                reg1Len = reg1.test(value) ? value.match(/[0-9A-z\.-]{1}/gi).length : 0,
-                reg2Len = reg2.test(value) ? value.match(/[\u4e00-\u9fa5。]{1}/gi).length : 0,
+//            var reg1 = /[0-9A-z\.-]{1}/gi,
+            //匹配中文以及中文符号
+            var reg2 = /[\u4E00-\u9FA5\u3002\uff1b\uff0c\uff1a\u201c\u201d\uff08\uff09\u3001\uff1f\u300a\u300b\u2019\u2018]{1}/gi,
+//                reg1Len = reg1.test(value) ? value.match(/[0-9A-z\.-]{1}/gi).length : 0,
+                reg2Len = reg2.test(value) ? value.match(reg2).length : 0,
+                reg1Len = value.length - reg2Len;
                 numLen = reg1Len +　reg2Len * 2;
-            
-            if(numLen > 4 && numLen < 16) {
+
+            if(numLen >= 4 && numLen <= 16) {
                 confirmForm.setAttribute('class','regsuccess');
                 nameInput.style.border = '1px solid green';
             }else {
