@@ -167,46 +167,83 @@
                 }
             }
         },
-        // 密码输入，6-10个字符 只能输入数字以及英文字母
-        passwordVali : function() {
-            var password = this.password,
-                value = password.value;
+        // 用来判断是否为空以及格式是否正确
+        passwordVali : function(sign) {
+            var value,
+                password,
+                el,
+                reg;
 
+            if(sign === 1) {
+                password = this.password;
+                value = password.value;
+                el = "newPassword";
+            }else if(sign === 2){
+                password = this.password2;
+                value = password.value;
+                el = "newPassword2";
+            }
             if(value == '') {
                 this.style(password, "输入不能为空", "red");
-                this.vali("newPassword","false");
-            }else {
-                var reg = /^[A-z0-9]{6,10}$/gi,
-                    regPassword = reg.test(value);
+                this.vali(el,"false");
+            }else{
+                reg = /^[A-z0-9]{6,10}$/gi;
+                regPassword = reg.test(value);
 
                 if(regPassword){
                     this.style(password, "填写正确", "green");
-                    this.vali("newPassword","true");
+                    this.vali(el,"true");
                 }else {
                     this.style(password, "填写格式错误,请输入6-10个字符 只能输入数字以及英文字母", "red");
-                    this.vali("newPassword","false");
+                    this.vali(el,"false");
                 }
             }
         },
+        // 密码输入，6-10个字符 只能输入数字以及英文字母
+//        passwordVali : function() {
+//            var password = this.password,
+//                value = password.value;
+//
+//            if(value == '') {
+//                this.style(password, "输入不能为空", "red");
+//                this.vali("newPassword","false");
+//            }else {
+//                var reg = /^[A-z0-9]{6,10}$/gi,
+//                    regPassword = reg.test(value);
+//
+//                if(regPassword){
+//                    this.style(password, "填写正确", "green");
+//                    this.vali("newPassword","true");
+//                }else {
+//                    this.style(password, "填写格式错误,请输入6-10个字符 只能输入数字以及英文字母", "red");
+//                    this.vali("newPassword","false");
+//                }
+//            }
+//        },
         // 验证第二次密码输入，必须要验证是否为空，因为当两次输入都为空的时候，就会显示验证通过，不需要验证输入格式，只需要验证是否和第一次相同
-        passwordVali2 : function () {
-            var password2 = this.password2,
-                value2 = password2.value,
-                value = this.password.value;
-
-            if(value2 == '') {
-                this.style(password2, "输入不能为空", "red");
-                this.vali("newPassword2","false");
-            }else {
-                if(value2 === value) {
-                    this.style(password2, "验证通过", "green");
-                    this.vali("newPassword2","true");
-                }else {
-                    this.style(password2, "两次密码输入不一样", "red");
-                    this.vali("newPassword2","false");
-                }
-            }
-        },
+//        passwordVali2 : function () {
+//            var password2 = this.password2,
+//                value2 = password2.value,
+//                value = this.password.value,// 输入框1
+//                reg = /^[A-z0-9]{6,10}$/gi,
+//                regPassword2 = reg.test(value2);
+//
+//            if(value2 == '') {
+//                this.style(password2, "输入不能为空", "red");
+//                this.vali("newPassword2","false");
+//            }else if(regPassword2) {
+//                if(value2 === value) {
+//                    this.style(password2, "验证通过", "green");
+//                    this.vali("newPassword2","true");
+//                }else {
+//                    this.style(password2, "两次密码输入不一样", "red");
+//                    this.vali("newPassword2","false");
+//                }
+//            }else {
+//                this.style(password2, "填写格式错误,请输入6-10个字符 只能输入数字以及英文字母", "red");
+//                this.vali("newPassword2","false");
+//            }
+//        },
         //验证邮箱输入,正确的格式xxxx@xxx.xxxx
         emailVali : function() {
             var email = this.email,
@@ -291,10 +328,10 @@
         formObj.nameVali();
     });
     inputPassword.addEventListener('blur', function() {
-        formObj.passwordVali();
+        formObj.passwordVali(1);
     });
     inputPassword2.addEventListener('blur', function() {
-        formObj.passwordVali2();
+        formObj.passwordVali(2);
     });
     inputEmail.addEventListener('blur', function() {
         formObj.emailVali();
@@ -303,6 +340,9 @@
         formObj.telVali();
     });
 
+    /**
+     * 表单填写是否正确
+     */
     valiBtn.addEventListener('click', function() {
         if(formObj.validate()) {
             valiBtn.innerHTML = "验证通过";
