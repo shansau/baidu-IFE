@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #form{
+            width: 400px;
+            padding: 10px;
+            padding-left: 0;
+            border:1px solid #444;
+            position: relative;
+            overflow: hidden;
+        }
+        .formGroup{
+            height: auto;
+            margin-bottom:10px;
+            line-height: 1.2;
+        }
+        .formLabel{
+            width: 25%;
+            font-size: 14px;
+            display: inline-block;
+            text-align: right;
+            margin-right: 20px;
+        }
+        .formLabel + input {
+            width: 50%;
+            padding: 3px 5px;
+            border:1px solid #999;
+            border-radius: 3px;
+        }
+        .tips{
+            font-size: 13px;
+            margin-left: 32%;
+            margin-top: 5px;
+
+            display: none;
+            color: #999;
+        }
+        #submit{
+            border: none;
+            padding: 5px 10px;
+            background: dodgerblue;
+            border-radius: 5px;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<form action="" id="form">
+    <div class="formGroup">
+        <label for="inputName" class="formLabel">姓名</label>
+        <input type="text" id="inputName" />
+        <p class="tips">必填，请输入4-16个字符</p>
+    </div>
+    <div class="formGroup">
+        <label for="inputPassword" class="formLabel">密码</label>
+        <input type="password" id="inputPassword">
+        <p class="tips">必填，请输入6-10个字符 只能输入数字以及英文字母</p>
+    </div>
+    <div class="formGroup">
+        <label for="inputPassword2" class="formLabel">确认密码</label>
+        <input type="password" id="inputPassword2">
+        <p class="tips">必填，请确认您的密码</p>
+    </div>
+    <div class="formGroup">
+        <label for="inputEmail" class="formLabel">邮箱</label>
+        <input type="email" id="inputEmail">
+        <p class="tips">必填，按照正确的格式xxxx@xxx.xxxx</p>
+    </div>
+    <div class="formGroup">
+        <label for="inputTel" class="formLabel">手机</label>
+        <input type="tel" id="inputTel">
+        <p class="tips">必填，请填写11位手机号</p>
+    </div>
+    <button type="button" id="submit">提 交</button>
+</form>
+<script>
+    // 公共方法
+    /**
+     * $方法获得dom对象
+     */
+    function $(ele){
+        if(ele.indexOf('#') == 0) {
+            return document.getElementById(ele.slice(1));
+        }
+        if(ele.indexOf('.') == 0) {
+            return document.getElementsByClassName(ele.slice(1));
+        }
+    }
+
+    /**
+     * 表单对象
+     */
+    function FormObj(name,password,password2,email,tel) {
+        this.name = name;
+        this.password = password;
+        this.password2 = password2;
+        this.email = email;
+        this.tel = tel;
+        this.valiCount = 0;
+
+        this.arrVali = {
+          newName : false,
+          newPassword : false,
+          newPassword2: false,
+          newEmail : false,
+          newTel : false
+        };
+    }
+    // 改变线框字体颜色
+    FormObj.prototype = {
+        constructor:FormObj,
+
+        style : function(el,text,color){
+            el.nextElementSibling.innerHTML = text;
+            el.style.border = "1px solid " + color;
+            el.nextElementSibling.style.color = color + "";
+        },
+        tip : function (el) {
+            //百度上用的nexSilbling但是经过测试需要加上Element
+            el.nextElementSibling.style.display = 'block';
+        },
+        // 改变form的arrVali属性
+        vali : function(key,setValue) {
+           this.arrVali[key] = setValue;
+        },
+        validate : function(){
+            var arrVali = this.arrVali,
+                count = this.valiCount;
+
+            for(var key in arrVali) {
+                arrVali[key] ? count++ : count;
+            }
+
+            if(count == 5){
+                return true;
+            }
+        },
+
+        // 验证姓名
+        nameVali : function() {
+            // 姓名输入，格式为4-16个字符
+            var name = this.name,
+                value = name.value;
+
+            if(value == ''){
+                this.style(name, "输入不能为空", "red");
+                this.vali("newName","false");
+            }else{
+                var reg = /[\u4E00-\u9FA5\u3002\uff1b\uff0c\uff1a\u201c\u201d\uff08\uff09\u3001\uff1f\u300a\u300b\u2019\u2018]{1}/gi,
+                    regName = reg.test(value) ? value.match(reg).length : 0,
+                    regName2 = value.length - regName,
+                    numName = regName * 2 + regName2;
+
+                if(numName <= 16 && numName >= 4) {
+                    this.style(name, "填写正确", "green");
+                    this.vali("newName","true");
+                }else {
+                    this.style(name, "填写格式错误,请输入4-16个字符", "red");
+                    this.vali("newName","false");
+                }
+            }
+        },
+        // 密码输入，6-10个字符 只能输入数字以及英文字母
+        passwordVali : function() {
+            var password = this.password,
+                value = password.value;
+
+            if(value == '') {
+                this.style(password, "输入不能为空", "red");
+                this.vali("newPassword","false");
+            }else {
+                var reg = /^[A-z0-9]{6,10}$/gi,
+                    regPassword = reg.test(value);
+
+                if(regPassword){
+                    this.style(password, "填写正确", "green");
+                    this.vali("newPassword","true");
+                }else {
+                    this.style(password, "填写格式错误,请输入6-10个字符 只能输入数字以及英文字母", "red");
+                    this.vali("newPassword","false");
+                }
+            }
+        },
+        // 验证第二次密码输入，必须要验证是否为空，因为当两次输入都为空的时候，就会显示验证通过，不需要验证输入格式，只需要验证是否和第一次相同
+        passwordVali2 : function () {
+            var password2 = this.password2,
+                value2 = password2.value,
+                value = this.password.value;
+
+            if(value2 == '') {
+                this.style(password2, "输入不能为空", "red");
+                this.vali("newPassword2","false");
+            }else {
+                if(value2 === value) {
+                    this.style(password2, "验证通过", "green");
+                    this.vali("newPassword2","true");
+                }else {
+                    this.style(password2, "两次密码输入不一样", "red");
+                    this.vali("newPassword2","false");
+                }
+            }
+        },
+        //验证邮箱输入,正确的格式xxxx@xxx.xxxx
+        emailVali : function() {
+            var email = this.email,
+                value = email.value;
+
+            if(value == ''){
+                this.style(email, "输入不能为空", "red");
+                this.vali("newEmail","false");
+            }else{
+                var reg = /^[A-z0-9]+@[A-z0-9]+.[A-z0-9]+$/gi;
+                // 这样分组是错的，正则表达式向后引用，引用的是文本就是已经匹配的文本，而不是，引用正则表达式
+                // var reg = /^([A-z0-9]+)@(\1).(\1)$/gi;
+
+                if(reg.test(value)) {
+                    this.style(email, "验证通过", "green");
+                    this.vali("newEmail","true");
+                }else {
+                    this.style(email, "填写格式错误,请按照正确格式xxxx@xxx.xxxx输入，不能出现特殊符号", "red");
+                    this.vali("newEmail","false");
+                }
+            }
+        },
+        // 验证手机，格式为11位数字
+        telVali : function() {
+            var tel = this.tel,
+                value = tel.value;
+
+            if(value == '') {
+                this.style(tel, "输入不能为空", "red");
+                this.vali("newTel","false");
+            }else{
+                var reg = /^1[034578]\d{9}$$/gi;
+
+                if(reg.test(value)) {
+                    this.style(tel, "验证通过", "green");
+                    this.vali("newTel","true");
+                }else{
+                    this.style(tel, "填写格式错误,请填写11位手机号码", "red");
+                    this.vali("newTel","false");
+                }
+            }
+        }
+    }
+
+    /**
+     * 获得dom操作对象
+     */
+    var inputName = $('#inputName'),
+        inputPassword = $('#inputPassword'),
+        inputPassword2 = $('#inputPassword2'),
+        inputEmail = $('#inputEmail'),
+        inputTel = $('#inputTel'),
+        valiBtn = $('#submit');
+
+
+    var formObj = new FormObj(inputName, inputPassword, inputPassword2, inputEmail, inputTel);
+
+    /**
+     * 绑定操作得到焦点
+     * 通过传入this对象来控制对应的tip
+     */
+    inputName.addEventListener('focus', function() {
+        formObj.tip(this);
+    });
+    inputPassword.addEventListener('focus', function() {
+        formObj.tip(this);
+    });
+    inputPassword2.addEventListener('focus', function() {
+        formObj.tip(this);
+    });
+    inputEmail.addEventListener('focus', function() {
+        formObj.tip(this);
+    });
+    inputTel.addEventListener('focus', function() {
+        formObj.tip(this);
+    });
+
+    /**
+     * 绑定失去焦点验证
+     */
+    inputName.addEventListener('blur', function() {
+        formObj.nameVali();
+    });
+    inputPassword.addEventListener('blur', function() {
+        formObj.passwordVali();
+    });
+    inputPassword2.addEventListener('blur', function() {
+        formObj.passwordVali2();
+    });
+    inputEmail.addEventListener('blur', function() {
+        formObj.emailVali();
+    });
+    inputTel.addEventListener('blur', function() {
+        formObj.telVali();
+    });
+
+    valiBtn.addEventListener('click', function() {
+        if(formObj.validate()) {
+            valiBtn.innerHTML = "验证通过";
+        }
+    });
+
+</script>
+</body>
+</html>
