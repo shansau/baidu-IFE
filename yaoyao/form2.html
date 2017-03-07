@@ -9,7 +9,7 @@
             padding: 0;
         }
         #form{
-            width: 400px;
+            width: 450px;
             padding: 10px;
             padding-left: 0;
             border:1px solid #444;
@@ -313,7 +313,10 @@
         inputPassword2 = $('#inputPassword2'),
         inputEmail = $('#inputEmail'),
         inputTel = $('#inputTel'),
-        valiBtn = $('#submit');
+        valiBtn = $('#submit'),
+        tipsGrounp = $('.tips');
+
+    var submitBtn = 0;
 
     //标记是否第一次触发密码输入框，如果是第一次的不调用输入框2的实时比对，否则实时调用再次确认密码
     var first = 0;
@@ -327,18 +330,23 @@
      */
     inputName.addEventListener('focus', function() {
         formObj.tip(this);
+        submitBtn = 1;
     });
     inputPassword.addEventListener('focus', function() {
         formObj.tip(this);
+        submitBtn = 1;
     });
     inputPassword2.addEventListener('focus', function() {
         formObj.tip(this);
+        submitBtn = 1;
     });
     inputEmail.addEventListener('focus', function() {
         formObj.tip(this);
+        submitBtn = 1;
     });
     inputTel.addEventListener('focus', function() {
         formObj.tip(this);
+        submitBtn = 1;
     });
 
     /**
@@ -370,11 +378,20 @@
      * 表单填写是否正确
      */
     valiBtn.addEventListener('click', function() {
-        if(formObj.validate()) {
-            valiBtn.innerHTML = "验证通过";
+        if(submitBtn == 0){
+            valiBtn.innerHTML = "请把表格填写完整";
+            for(var i = 0; i < tipsGrounp.length; i++){
+                tipsGrounp[i].style.display = 'block';
+                tipsGrounp[i].style.color = 'red';
+            }
         }else {
-            valiBtn.innerHTML = "再次验证";
+            if(formObj.validate()) {
+                valiBtn.innerHTML = "验证通过";
+            }else {
+                valiBtn.innerHTML = "再次验证";
+            }
         }
+
     });
 
 </script>
