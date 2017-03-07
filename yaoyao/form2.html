@@ -357,6 +357,7 @@
             for(var i = 0; i < tipsGrounp.length; i++){
                 tipsGrounp[i].style.display = 'block';
                 tipsGrounp[i].style.color = 'red';
+                tipsGrounp[i].previousElementSibling.style.border = "1px solid red";
             }
         }else {
             if(formObj.validate()) {
