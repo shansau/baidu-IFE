@@ -302,26 +302,34 @@
      * 绑定操作得到焦点
      * 通过传入this对象来控制对应的tip
      */
-    inputName.addEventListener('focus', function() {
-        formObj.tip(this,1);
-        submitBtn = 1;
-    });
-    inputPassword.addEventListener('focus', function() {
-        formObj.tip(this,2);
-        submitBtn = 1;
-    });
-    inputPassword2.addEventListener('focus', function() {
-        formObj.tip(this,3);
-        submitBtn = 1;
-    });
-    inputEmail.addEventListener('focus', function() {
-        formObj.tip(this,4);
-        submitBtn = 1;
-    });
-    inputTel.addEventListener('focus', function() {
-        formObj.tip(this,5);
-        submitBtn = 1;
-    });
+    $("#form").addEventListener('click',function(e){
+        //利用冒泡父代理子元素的事件;
+        var id = e.target.id || e.srcElement.id;
+        switch (id) {
+            case "inputName" :
+                formObj.tip(inputName,1);
+                submitBtn = 1;
+                break;
+            case "inputPassword" :
+                formObj.tip(inputPassword,1);
+                submitBtn = 1;
+                break;
+            case "inputPassword2" :
+                formObj.tip(inputPassword2,1);
+                submitBtn = 1;
+                break;
+            case "inputEmail" :
+                formObj.tip(inputEmail,1);
+                submitBtn = 1;
+                break;
+            case "inputTel" :
+                formObj.tip(inputTel,1);
+                submitBtn = 1;
+                break;
+            default:
+                break;
+        }
+    },false);
 
     /**
      * 绑定失去焦点验证
