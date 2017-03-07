@@ -122,6 +122,7 @@
             el.style.border = "1px solid " + color;
             el.nextElementSibling.style.color = color + "";
         },
+        // 绑定每一个tip对应的dom
         tip : function (el) {
             //百度上用的nexSilbling但是经过测试需要加上Element
             el.nextElementSibling.style.display = 'block';
@@ -130,6 +131,7 @@
         vali : function(key,setValue) {
            this.arrVali[key] = setValue;
         },
+        // 验证是否所有的填写正确
         validate : function(){
             var arrVali = this.arrVali,
                 count = this.valiCount;
@@ -193,10 +195,25 @@
                 if(regPassword){
                     this.style(password, "填写正确", "green");
                     this.vali(el,"true");
+
+                    return true;
                 }else {
                     this.style(password, "填写格式错误,请输入6-10个字符 只能输入数字以及英文字母", "red");
                     this.vali(el,"false");
+
+                    return false;
                 }
+            }
+        },
+        passwordCom : function(el) {
+            var password2 = this.password2,
+                value2 = password2.value,// 输入框2
+                value = this.password.value;// 输入框1
+            if(value === value2){
+                this.passwordVali(el);
+            }else{
+                this.style(password2, "两次输入密码不同", "red");
+                this.vali("newPassword2","false");
             }
         },
         // 密码输入，6-10个字符 只能输入数字以及英文字母
@@ -298,6 +315,9 @@
         inputTel = $('#inputTel'),
         valiBtn = $('#submit');
 
+    //标记是否第一次触发密码输入框，如果是第一次的不调用输入框2的实时比对，否则实时调用再次确认密码
+    var first = 0;
+
 
     var formObj = new FormObj(inputName, inputPassword, inputPassword2, inputEmail, inputTel);
 
@@ -329,9 +349,15 @@
     });
     inputPassword.addEventListener('blur', function() {
         formObj.passwordVali(1);
+
+        if(first){
+            formObj.passwordCom(2);
+        }else{
+            first = 1;
+        }
     });
     inputPassword2.addEventListener('blur', function() {
-        formObj.passwordVali(2);
+       formObj.passwordCom(2);
     });
     inputEmail.addEventListener('blur', function() {
         formObj.emailVali();
@@ -346,6 +372,8 @@
     valiBtn.addEventListener('click', function() {
         if(formObj.validate()) {
             valiBtn.innerHTML = "验证通过";
+        }else {
+            valiBtn.innerHTML = "再次验证";
         }
     });
 
