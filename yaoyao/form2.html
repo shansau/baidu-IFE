@@ -103,8 +103,9 @@
         this.password2 = password2;
         this.email = email;
         this.tel = tel;
-        this.valiCount = 0;
 
+        //遍历arrVail时，配合使用
+        this.valiCount = 0;
         this.arrVali = {
           newName : false,
           newPassword : false,
@@ -227,6 +228,7 @@
             var password2 = this.password2,
                 value2 = password2.value,// 输入框2
                 value = this.password.value;// 输入框1
+
             if(value === value2){
                 this.passwordVali(el);
             }else{
