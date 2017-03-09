@@ -80,18 +80,18 @@
         <div class="showGroup" id="uniDiv">
             <label for="university">学校</label>
             <select name="" id="province">
-                <option value="">北京</option>
-                <option value="">上海</option>
-                <option value="">广州</option>
-                <option value="">四川</option>
-                <option value="">香港</option>
+                <option value="0">北京</option>
+                <option value="1">上海</option>
+                <option value="2">广州</option>
+                <option value="3">四川</option>
+                <option value="4">香港</option>
             </select>
             <select name="" id="university">
-                <option value="">北京大学</option>
-                <option value="">清华大学</option>
-                <option value="">中国人民大学</option>
-                <option value="">对外经贸大学</option>
-                <option value="">中央美术学院</option>
+                <option value="北京大学">北京大学</option>
+                <option value="清华大学">清华大学</option>
+                <option value="中国人民大学">中国人民大学</option>
+                <option value="对外经贸大学">对外经贸大学</option>
+                <option value="中央美术学院">中央美术学院</option>
             </select>
         </div>
         <div class="showGroup" id="comDiv">
@@ -99,8 +99,18 @@
             <input type="text" id="company">
         </div>
     </form>
+    <!--<script src="ajax.js"></script>-->
     <script>
-        //公共方法
+        var universitys = [
+            ["北京大学","清华大学","中国人民大学","对外经贸大学","中央美术学院"],
+            ["上海大学","复旦大学","上海交通大学","上海外国语大学"],
+            ["广州大学","中山大学","华南理工大学","广州外国语大学"],
+            ["四川大学","电子科技大学","西南交通大学","西南财经大学","四川师范大学"],
+            ["香港大学","香港科技大学","香港中文大学","香港城市大学"]
+        ];
+
+
+        // 公共方法
         function $(str) {
             if(str.indexOf('#') == 0) {
                 return document.getElementById(str.slice(1));
@@ -109,31 +119,56 @@
             }
         }
 
-        //获得dom元素
+        // 获得dom元素
         var showGroups = $('.showGroup'),
             info = $('#info'),
             stu = $('#stu'),
             nstu = $('#nstu'),
             uniDiv = $('#uniDiv'),
-            comDiv = $('#comDiv');
+            comDiv = $('#comDiv'),
+            province = $('#province'),
+            university = $('#university');
 
-        //父元素监听点击切换
-        info.addEventListener('click',function(e) {
+        // 父元素监听点击切换
+        info.addEventListener('click', function(e) {
             var id = e.target.id || e.srcElement.id;
+
             if(id === "stu"){
                 display(showGroups,uniDiv);
             }else if(id === "nstu") {
                 display(showGroups,comDiv);
             }
         });
+        // seclect监听change事件
+        var preIndex = 0;
+        province.addEventListener('change', function() {
+            var index = province.selectedIndex;
+            var list = universitys[index];
 
-        //切换方法
+            if(index === preIndex) {
+                return;
+            }else {
+                university.innerHTML = '';
+                for(var i = 0; i < list.length; i++) {
+                    var option = document.createElement('option');
+
+                    option.innerHTML = list[i];
+                    university.appendChild(option);
+                }
+            }
+        });
+
+        // 切换方法
         function display(group,visible) {
             for(var i = 0; i < group.length; i++){
                 group[i].style.display = 'none';
             }
             visible.style.display = 'block';
         }
+
+
+
+
 
     </script>
 </body>
