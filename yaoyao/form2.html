@@ -217,6 +217,7 @@
             var password2 = this.password2,
                 value2 = password2.value,// 输入框2
                 value = this.password.value;// 输入框1
+
             if(value === value2){
                 this.passwordVali(el);
             }else{
@@ -273,6 +274,7 @@
         inputTel = $('#inputTel'),
         valiBtn = $('#submit'),
         tipsGrounp = $('.tips');
+
     //用来标记页面是否第一次加载好，就直接点击了提交
     var submitBtn = 0;
     //标记是否第一次触发密码输入框，如果是第一次的不调用输入框2的实时比对，否则实时调用再次确认密码
@@ -310,6 +312,7 @@
                 break;
         }
     },false);
+  
     /**
      * 绑定失去焦点验证
      */
