@@ -30,7 +30,7 @@
             vertical-align: middle;
         }
         input:checked + label:before {
-            background: url("dot.png") -2px -2.6px no-repeat dodgerblue;
+            background: url("dot.png") -5px -5px no-repeat dodgerblue;
         }
 
 
@@ -38,7 +38,7 @@
             margin-top: 20px;
         }
         .showGroup label{
-            width: 100px;
+            width: 80px;
             display: inline-block;
             text-align: right;
             margin-right: 20px;
@@ -57,12 +57,19 @@
             border-radius: 6px;
             border: 1px solid #999;
         }
+
+        #uniDiv{
+            display: block;
+        }
+        #comDiv{
+            display: none;
+        }
     </style>
 </head>
 <body>
     <form id="info">
         <div class="inputGroup">
-            <input type="radio" id="stu" name="option">
+            <input type="radio" id="stu" name="option" checked>
             <label for="stu" class="labelBtn">在校生</label>
         </div>
         <div class="inputGroup">
@@ -70,7 +77,7 @@
             <label for="nstu"  class="labelBtn">非在校生</label>
         </div>
 
-        <div class="showGroup">
+        <div class="showGroup" id="uniDiv">
             <label for="university">学校</label>
             <select name="" id="province">
                 <option value="">北京</option>
@@ -87,10 +94,47 @@
                 <option value="">中央美术学院</option>
             </select>
         </div>
-        <div class="showGroup">
+        <div class="showGroup" id="comDiv">
             <label for="company">就业单位</label>
             <input type="text" id="company">
         </div>
     </form>
+    <script>
+        //公共方法
+        function $(str) {
+            if(str.indexOf('#') == 0) {
+                return document.getElementById(str.slice(1));
+            }else if(str.indexOf('.') == 0) {
+                return document.getElementsByClassName(str.slice(1));
+            }
+        }
+
+        //获得dom元素
+        var showGroups = $('.showGroup'),
+            info = $('#info'),
+            stu = $('#stu'),
+            nstu = $('#nstu'),
+            uniDiv = $('#uniDiv'),
+            comDiv = $('#comDiv');
+
+        //父元素监听点击切换
+        info.addEventListener('click',function(e) {
+            var id = e.target.id || e.srcElement.id;
+            if(id === "stu"){
+                display(showGroups,uniDiv);
+            }else if(id === "nstu") {
+                display(showGroups,comDiv);
+            }
+        });
+
+        //切换方法
+        function display(group,visible) {
+            for(var i = 0; i < group.length; i++){
+                group[i].style.display = 'none';
+            }
+            visible.style.display = 'block';
+        }
+
+    </script>
 </body>
 </html>
