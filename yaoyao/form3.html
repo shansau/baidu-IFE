@@ -3,8 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #info{
+            width: 340px;
+            /*border: 1px solid #444;*/
+            margin: auto;
+            padding-top: 30px;
+        }
+
+        .inputGroup{
+            display: inline-block;
+            margin-left: 50px;
+        }
+        .inputGroup input {
+            display: none;
+        }
+        .labelBtn:before{
+            content: '';
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 100%;
+            background: #fff;
+            border: 1px solid #999;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        input:checked + label:before {
+            background: url("dot.png") -2px -2.6px no-repeat dodgerblue;
+        }
+
+
+        .showGroup{
+            margin-top: 20px;
+        }
+        .showGroup label{
+            width: 100px;
+            display: inline-block;
+            text-align: right;
+            margin-right: 20px;
+        }
+        .showGroup select{
+            width: 130px;
+            height: 30px;
+            border-radius: 6px;
+        }
+        #province{
+            width: 80px;
+        }
+        .showGroup input{
+            width: 210px;
+            height: 30px;
+            border-radius: 6px;
+            border: 1px solid #999;
+        }
+    </style>
 </head>
 <body>
+    <form id="info">
+        <div class="inputGroup">
+            <input type="radio" id="stu" name="option">
+            <label for="stu" class="labelBtn">在校生</label>
+        </div>
+        <div class="inputGroup">
+            <input type="radio" id="nstu" name="option">
+            <label for="nstu"  class="labelBtn">非在校生</label>
+        </div>
 
+        <div class="showGroup">
+            <label for="university">学校</label>
+            <select name="" id="province">
+                <option value="">北京</option>
+                <option value="">上海</option>
+                <option value="">广州</option>
+                <option value="">四川</option>
+                <option value="">香港</option>
+            </select>
+            <select name="" id="university">
+                <option value="">北京大学</option>
+                <option value="">清华大学</option>
+                <option value="">中国人民大学</option>
+                <option value="">对外经贸大学</option>
+                <option value="">中央美术学院</option>
+            </select>
+        </div>
+        <div class="showGroup">
+            <label for="company">就业单位</label>
+            <input type="text" id="company">
+        </div>
+    </form>
 </body>
 </html>
