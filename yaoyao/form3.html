@@ -3,8 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #info{
+            width: 340px;
+            /*border: 1px solid #444;*/
+            margin: auto;
+            padding-top: 30px;
+        }
+
+        .inputGroup{
+            display: inline-block;
+            margin-left: 50px;
+        }
+        .inputGroup input {
+            display: none;
+        }
+        .labelBtn:before{
+            content: '';
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 100%;
+            background: #fff;
+            border: 1px solid #999;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        input:checked + label:before {
+            background: url("dot.png") -5px -5px no-repeat dodgerblue;
+        }
+
+
+        .showGroup{
+            margin-top: 20px;
+        }
+        .showGroup label{
+            width: 80px;
+            display: inline-block;
+            text-align: right;
+            margin-right: 20px;
+        }
+        .showGroup select{
+            width: 130px;
+            height: 30px;
+            border-radius: 6px;
+        }
+        #province{
+            width: 80px;
+        }
+        .showGroup input{
+            width: 210px;
+            height: 30px;
+            border-radius: 6px;
+            border: 1px solid #999;
+        }
+
+        #uniDiv{
+            display: block;
+        }
+        #comDiv{
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <form id="info">
+        <div class="inputGroup">
+            <input type="radio" id="stu" name="option" checked>
+            <label for="stu" class="labelBtn">在校生</label>
+        </div>
+        <div class="inputGroup">
+            <input type="radio" id="nstu" name="option">
+            <label for="nstu"  class="labelBtn">非在校生</label>
+        </div>
 
+        <div class="showGroup" id="uniDiv">
+            <label for="university">学校</label>
+            <select name="" id="province">
+                <option value="">北京</option>
+                <option value="">上海</option>
+                <option value="">广州</option>
+                <option value="">四川</option>
+                <option value="">香港</option>
+            </select>
+            <select name="" id="university">
+                <option value="">北京大学</option>
+                <option value="">清华大学</option>
+                <option value="">中国人民大学</option>
+                <option value="">对外经贸大学</option>
+                <option value="">中央美术学院</option>
+            </select>
+        </div>
+        <div class="showGroup" id="comDiv">
+            <label for="company">就业单位</label>
+            <input type="text" id="company">
+        </div>
+    </form>
+    <script>
+        //公共方法
+        function $(str) {
+            if(str.indexOf('#') == 0) {
+                return document.getElementById(str.slice(1));
+            }else if(str.indexOf('.') == 0) {
+                return document.getElementsByClassName(str.slice(1));
+            }
+        }
+
+        //获得dom元素
+        var showGroups = $('.showGroup'),
+            info = $('#info'),
+            stu = $('#stu'),
+            nstu = $('#nstu'),
+            uniDiv = $('#uniDiv'),
+            comDiv = $('#comDiv');
+
+        //父元素监听点击切换
+        info.addEventListener('click',function(e) {
+            var id = e.target.id || e.srcElement.id;
+            if(id === "stu"){
+                display(showGroups,uniDiv);
+            }else if(id === "nstu") {
+                display(showGroups,comDiv);
+            }
+        });
+
+        //切换方法
+        function display(group,visible) {
+            for(var i = 0; i < group.length; i++){
+                group[i].style.display = 'none';
+            }
+            visible.style.display = 'block';
+        }
+
+    </script>
 </body>
 </html>

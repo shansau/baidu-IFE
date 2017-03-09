@@ -38,7 +38,6 @@
             font-size: 13px;
             margin-left: 32%;
             margin-top: 5px;
-
             display: none;
             color: #999;
         }
@@ -93,7 +92,6 @@
             return document.getElementsByClassName(ele.slice(1));
         }
     }
-
     /**
      * 表单对象
      */
@@ -107,17 +105,16 @@
         //遍历arrVail时，配合使用
         this.valiCount = 0;
         this.arrVali = {
-          newName : false,
-          newPassword : false,
-          newPassword2: false,
-          newEmail : false,
-          newTel : false
+            newName : false,
+            newPassword : false,
+            newPassword2: false,
+            newEmail : false,
+            newTel : false
         };
     }
     // 改变线框字体颜色
     FormObj.prototype = {
         constructor:FormObj,
-
         style : function(el,text,color){
             el.nextElementSibling.innerHTML = text;
             el.style.border = "1px solid " + color;
@@ -148,13 +145,12 @@
         },
         // 改变form的arrVali属性
         vali : function(key,setValue) {
-           this.arrVali[key] = setValue;
+            this.arrVali[key] = setValue;
         },
         // 验证是否所有的填写正确
         validate : function(){
             var arrVali = this.arrVali,
                 count = this.valiCount;
-
             for(var key in arrVali) {
                 arrVali[key] == true ? count++ : count;
             }
@@ -162,13 +158,11 @@
                 return true;
             }
         },
-
         // 验证姓名
         nameVali : function() {
             // 姓名输入，格式为4-16个字符
             var name = this.name,
                 value = name.value;
-
             if(value == ''){
                 this.style(name, "输入不能为空", "red");
                 this.vali("newName","false");
@@ -177,7 +171,6 @@
                     regName = reg.test(value) ? value.match(reg).length : 0,
                     regName2 = value.length - regName,
                     numName = regName * 2 + regName2;
-
                 if(numName <= 16 && numName >= 4) {
                     this.style(name, "填写正确", "green");
                     this.vali("newName","true");
@@ -193,7 +186,6 @@
                 password,
                 el,
                 reg;
-
             if(sign === 1) {
                 password = this.password;
                 value = password.value;
@@ -209,16 +201,13 @@
             }else{
                 reg = /^[A-z0-9]{6,10}$/gi;
                 regPassword = reg.test(value);
-
                 if(regPassword){
                     this.style(password, "填写正确", "green");
                     this.vali(el,"true");
-
                     return true;
                 }else {
                     this.style(password, "填写格式错误", "red");
                     this.vali(el,"false");
-
                     return false;
                 }
             }
@@ -240,7 +229,6 @@
         emailVali : function() {
             var email = this.email,
                 value = email.value;
-
             if(value == ''){
                 this.style(email, "输入不能为空", "red");
                 this.vali("newEmail","false");
@@ -248,7 +236,6 @@
                 var reg = /^[A-z0-9]+@[A-z0-9]+.[A-z0-9]+$/gi;
                 // 这样分组是错的，正则表达式向后引用，引用的是文本就是已经匹配的文本，而不是，引用正则表达式
                 // var reg = /^([A-z0-9]+)@(\1).(\1)$/gi;
-
                 if(reg.test(value)) {
                     this.style(email, "验证通过", "green");
                     this.vali("newEmail","true");
@@ -262,13 +249,11 @@
         telVali : function() {
             var tel = this.tel,
                 value = tel.value;
-
             if(value == '') {
                 this.style(tel, "输入不能为空", "red");
                 this.vali("newTel","false");
             }else{
                 var reg = /^1[034578]\d{9}$$/gi;
-
                 if(reg.test(value)) {
                     this.style(tel, "验证通过", "green");
                     this.vali("newTel","true");
@@ -279,7 +264,6 @@
             }
         }
     }
-
     /**
      * 获得dom操作对象
      */
@@ -293,13 +277,9 @@
 
     //用来标记页面是否第一次加载好，就直接点击了提交
     var submitBtn = 0;
-
     //标记是否第一次触发密码输入框，如果是第一次的不调用输入框2的实时比对，否则实时调用再次确认密码
     var first = 0;
-
-
     var formObj = new FormObj(inputName, inputPassword, inputPassword2, inputEmail, inputTel);
-
     /**
      * 绑定操作得到焦点
      * 通过传入this对象来控制对应的tip
@@ -332,7 +312,7 @@
                 break;
         }
     },false);
-
+  
     /**
      * 绑定失去焦点验证
      */
@@ -341,7 +321,6 @@
     });
     inputPassword.addEventListener('blur', function() {
         formObj.passwordVali(1);
-
         if(first){
             formObj.passwordCom(2);
         }else{
@@ -349,7 +328,7 @@
         }
     });
     inputPassword2.addEventListener('blur', function() {
-       formObj.passwordCom(2);
+        formObj.passwordCom(2);
     });
     inputEmail.addEventListener('blur', function() {
         formObj.emailVali();
@@ -357,7 +336,6 @@
     inputTel.addEventListener('blur', function() {
         formObj.telVali();
     });
-
     /**
      * 表单填写是否正确
      */
@@ -376,9 +354,7 @@
                 valiBtn.innerHTML = "再次验证";
             }
         }
-
     });
-
 </script>
 </body>
 </html>
